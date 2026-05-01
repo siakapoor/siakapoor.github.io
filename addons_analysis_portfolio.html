@@ -1,0 +1,199 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Add-ons Analysis — Portfolio Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0f1724;
+      --panel:#0b1220;
+      --glass: rgba(255,255,255,0.04);
+      --accent1: #7c5cff;
+      --accent2: #00d4ff;
+      --accent3: #ffd166;
+      --muted: #98a0ad;
+      --card: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;color:#e6eef8;background:linear-gradient(180deg,#071025 0%, #0b1724 60%);}
+    .wrap{max-width:1400px;margin:28px auto;padding:28px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;flex-direction:column}
+    h1{color:var(--accent3);font-size:34px;margin:0;letter-spacing:1px}
+    p.lead{margin:6px 0 0;color:var(--muted)}
+    .status{background:linear-gradient(90deg,var(--accent1),var(--accent2));padding:8px 14px;border-radius:999px;color:#021124;font-weight:700;box-shadow:0 6px 20px rgba(124,92,255,.18)}
+    .layout{display:grid;grid-template-columns:260px 1fr;gap:24px;margin-top:22px}
+    /* sidebar */
+    .sidebar{background:var(--panel);border-radius:18px;padding:18px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 10px 30px rgba(2,6,23,0.6)}
+    .nav{display:flex;flex-direction:column;gap:12px}
+    .nav button{background:transparent;border:none;padding:14px 16px;text-align:left;border-radius:12px;color:var(--muted);font-weight:700;cursor:pointer;transition:all .22s;box-shadow:inset 0 -2px 0 rgba(255,255,255,0.01)}
+    .nav button:hover{transform:translateY(-3px);color:#fff}
+    .nav button.active{background:linear-gradient(90deg, rgba(124,92,255,0.14), rgba(0,212,255,0.06));color:white;box-shadow:0 8px 24px rgba(12,18,30,0.6)}
+    /* main */
+    .main{display:flex;flex-direction:column;gap:18px}
+    .controls{display:flex;justify-content:flex-end;gap:12px;align-items:center}
+    .select{background:var(--glass);border:1px solid rgba(255,255,255,0.04);color:#dfe9f7;padding:8px 12px;border-radius:999px}
+    .btn{background:linear-gradient(90deg,var(--accent2),var(--accent1));color:#021124;padding:8px 14px;border-radius:999px;border:none;font-weight:800;cursor:pointer}
+    /* dashboard panel */
+    .panel{background:var(--card);padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.03);backdrop-filter: blur(6px)}
+    .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+    .kpi{padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow:0 8px 18px rgba(2,6,23,0.6);}
+    .kpi .label{color:var(--muted);font-weight:700;font-size:13px}
+    .kpi .value{font-size:28px;font-weight:800;margin-top:8px;color:#fff}
+    .kpi .goal{margin-top:6px;color:var(--muted);font-size:12px}
+    /* charts area */
+    .charts{display:grid;grid-template-columns:2fr 1fr;gap:16px}
+    .bars{display:flex;flex-direction:column;gap:10px}
+    .bar-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+    .bar-row .meta{width:160px;color:var(--muted);font-weight:700}
+    .bar-row .track{flex:1;height:12px;border-radius:999px;background:rgba(255,255,255,0.04);overflow:hidden}
+    .bar-row .track > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--accent1),var(--accent2));box-shadow:0 4px 18px rgba(124,92,255,.18);}
+    /* table */
+    table{width:100%;border-collapse:collapse;color:#dbeafe}
+    th,td{padding:12px 10px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03)}
+    th{color:var(--muted);font-size:13px}
+    td{font-weight:600}
+    .tag{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,0.03);color:var(--muted);font-size:12px}
+    /* placeholder visuals */
+    .spark{height:36px;width:120px}
+    /* responsive */
+    @media(max-width:980px){.layout{grid-template-columns:1fr;}.kpis{grid-template-columns:repeat(2,1fr)}.charts{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <h1>ADD-ONS ANALYSIS</h1>
+        <p class="lead">Portfolio-friendly redesign — anonymized sample data | eye-catching, modern visuals</p>
+      </div>
+      <div class="status">PORTFOLIO SAMPLE</div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="nav">
+          <button class="nav-btn active" data-target="tab-goal">Add-on Goal</button>
+          <button class="nav-btn" data-target="tab-hfb">HFB Add-on</button>
+          <button class="nav-btn" data-target="tab-article">Article Performance</button>
+          <button class="nav-btn" data-target="tab-location">Add-on Location</button>
+          <button class="nav-btn" data-target="tab-info">Information</button>
+        </nav>
+      </aside>
+
+      <main class="main">
+        <div class="controls">
+          <select class="select"><option>FY2026 (sample)</option></select>
+          <select class="select"><option>All markets</option></select>
+          <button class="btn">Store benchmark</button>
+        </div>
+
+        <section id="tab-goal" class="tab panel">
+          <div class="kpis">
+            <div class="kpi">
+              <div class="label">Add-on Sales Share</div>
+              <div class="value">3.5% <span style="font-size:12px;color:var(--muted);font-weight:600"> • Goal 9.0%</span></div>
+              <div class="goal">Share of turnover from add-on articles</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Total Store Pick-up Rate</div>
+              <div class="value">52.0% <span style="font-size:12px;color:var(--muted);font-weight:600"> • Goal 60%</span></div>
+              <div class="goal">Refills per store visit</div>
+            </div>
+            <div class="kpi">
+              <div class="label">IKEA Food Store Sales</div>
+              <div class="value" style="color:var(--accent3)">16.5% <span style="font-size:12px;color:var(--muted);font-weight:600"> • Goal 15%</span></div>
+              <div class="goal">Food share of total store sales</div>
+            </div>
+            <div class="kpi">
+              <div class="label">Filling Rate</div>
+              <div class="value">83.0% <span style="font-size:12px;color:var(--muted);font-weight:600"> • Goal 90%</span></div>
+              <div class="goal">Qty on floor / space capacity</div>
+            </div>
+          </div>
+
+          <div class="charts" style="margin-top:12px">
+            <div class="panel">
+              <h3 style="color:#cfe7ff;margin-top:0">Estimated Turnover by HFB</h3>
+              <div class="bars" style="margin-top:12px">
+                <div class="bar-row"><div class="meta">Home organisation</div><div class="track"><i style="width:78%"></i></div><div style="width:84px;text-align:right;color:var(--muted)">$13.0M</div></div>
+                <div class="bar-row"><div class="meta">Cooking</div><div class="track"><i style="width:46%"></i></div><div style="width:84px;text-align:right;color:var(--muted)">$7.0M</div></div>
+                <div class="bar-row"><div class="meta">Bed & bath</div><div class="track"><i style="width:59%"></i></div><div style="width:84px;text-align:right;color:var(--muted)">$6.4M</div></div>
+                <div class="bar-row"><div class="meta">Eating</div><div class="track"><i style="width:32%"></i></div><div style="width:84px;text-align:right;color:var(--muted)">$5.0M</div></div>
+                <div class="bar-row"><div class="meta">Home textiles</div><div class="track"><i style="width:28%"></i></div><div style="width:84px;text-align:right;color:var(--muted)">$4.7M</div></div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <h3 style="color:#cfe7ff;margin-top:0">Top SLIDs (sample)</h3>
+              <div style="display:flex;flex-direction:column;gap:12px;margin-top:12px">
+                <div style="display:flex;justify-content:space-between;align-items:center"><div style="color:var(--muted)">256 MHOW01</div><div style="width:120px"><div class="track"><i style="width:72%"></i></div></div><div style="color:var(--muted)">$0.60M</div></div>
+                <div style="display:flex;justify-content:space-between;align-items:center"><div style="color:var(--muted)">313 MOWD17</div><div style="width:120px"><div class="track"><i style="width:48%"></i></div></div><div style="color:var(--muted)">$0.40M</div></div>
+                <div style="display:flex;justify-content:space-between;align-items:center"><div style="color:var(--muted)">039 MOWN18</div><div style="width:120px"><div class="track"><i style="width:36%"></i></div></div><div style="color:var(--muted)">$0.34M</div></div>
+                <div style="display:flex;justify-content:space-between;align-items:center"><div style="color:var(--muted)">149 MOW009</div><div style="width:120px"><div class="track"><i style="width:30%"></i></div></div><div style="color:var(--muted)">$0.30M</div></div>
+                <div style="display:flex;justify-content:space-between;align-items:center"><div style="color:var(--muted)">529 S0WI21</div><div style="width:120px"><div class="track"><i style="width:26%"></i></div></div><div style="color:var(--muted)">$0.27M</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel" style="margin-top:12px">
+            <h3 style="color:#cfe7ff;margin-top:0">Top add-on articles — Home organisation</h3>
+            <table style="margin-top:12px">
+              <thead><tr><th>Article #</th><th>Article name</th><th>Est. turnover</th><th>% of add-on sales</th><th>Refilled pcs</th></tr></thead>
+              <tbody>
+                <tr><td>500.979.95</td><td>BUMERANG hanger natural 8-p</td><td>$93,700</td><td>10.2%</td><td>11,000</td></tr>
+                <tr><td>200.456.78</td><td>SMÅSTAD box</td><td>$52,100</td><td>6.1%</td><td>4,200</td></tr>
+                <tr><td>700.321.11</td><td>VARIERA insert</td><td>$43,800</td><td>5.1%</td><td>3,800</td></tr>
+                <tr><td>111.222.33</td><td>KOMPLEMENT shelf</td><td>$38,200</td><td>4.2%</td><td>2,600</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="tab-hfb" class="tab panel" style="display:none">
+          <div class="panel"><h3 style="color:#cfe7ff;margin-top:0">HFB Add-on — Overview</h3><p style="color:var(--muted)">Designed layout for deeper HFB analysis: distribution maps, heatmaps, and contribution waterfalls (placeholder).</p></div>
+        </section>
+
+        <section id="tab-article" class="tab panel" style="display:none">
+          <div class="panel"><h3 style="color:#cfe7ff;margin-top:0">Article Performance Deep-Dive (Placeholder)</h3><p style="color:var(--muted)">Article-level dashboards with sparklines, cohort analysis, and lifecycle visualizations.</p></div>
+        </section>
+
+        <section id="tab-location" class="tab panel" style="display:none">
+          <div class="panel"><h3 style="color:#cfe7ff;margin-top:0">Add-on Location Strategy</h3><p style="color:var(--muted)">Store layout examples and placement impact metrics (placeholder).</p></div>
+        </section>
+
+        <section id="tab-info" class="tab panel" style="display:none">
+          <div class="panel"><h3 style="color:#cfe7ff;margin-top:0">Information & Methodology</h3><p style="color:var(--muted)">All data anonymized. This sample is styled for portfolio presentation.</p></div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // Tab switching
+    document.querySelectorAll('.nav-btn').forEach(btn=>{
+      btn.addEventListener('click', e=>{
+        document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const tgt = btn.dataset.target;
+        document.querySelectorAll('.tab').forEach(t=>t.style.display='none');
+        document.getElementById(tgt).style.display='block';
+      });
+    });
+
+    // small animation: animate bars on load
+    window.addEventListener('load', ()=>{
+      document.querySelectorAll('.track i').forEach((el)=>{
+        const w = el.style.width;
+        el.style.width = '0%';
+        setTimeout(()=>el.style.width = w, 200);
+      });
+    });
+  </script>
+</body>
+</html>
